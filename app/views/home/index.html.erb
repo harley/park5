@@ -1,0 +1,6 @@
+<h1>Park5Chat</h1>
+<% if @user %>
+Welcome <%= @user.email %>! Have a nice time
+<% end %>
+<%= link_to "Register", new_user_path %>
+<%#= link_to "Login", new_session_path %>
