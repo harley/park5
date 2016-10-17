@@ -1,0 +1,36 @@
+<h1>Messages#incoming</h1>
+<%= link_to "New Message", "/" %>
+<%= link_to "Add Friend", "/" %>
+<%= link_to "View Sent Message", outgoing_messages_path %>
+<% if @incoming_messages%>
+	<p>You have <%= @incoming_messages.size %> incoming messages</p>
+	<table>
+	<tr>
+		<td>From</td>
+		<td>Subject</td>
+		<td>Body</td>
+		<td>Sent at</td>
+	</tr>
+	<% @incoming_messages.each do |message| %>
+		<tr>
+			<% unless message.read_status%>
+			<td><strong><%= message.sender %></strong></td>
+			<td><strong><%= message.subject %></strong></td>
+			<td><strong><%= message.body %></strong></td>
+			<td><strong><%= message.created_at %></strong></td>
+			<% else%>
+			<td><%= message.sender %></td>
+			<td><%= message.subject %></td>
+			<td><%= message.body %></td>
+			<td><%= message.created_at %></td>
+			<% end %>
+			<td>
+			<%= link_to "Mark as read", mark_as_read_message_path(message.id), {:method=> :post} %>
+			</td>
+<% end %>
+		</tr>
+<% else %>
+	<p>You haven't got any messages. Want to send some?</p>
+<% end %>
+
+</table>

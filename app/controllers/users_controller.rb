@@ -15,6 +15,10 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def incoming_messages
+		Message.where(recipient_id: id)
+	end
+
 	private
 
 	def user_params
