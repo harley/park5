@@ -1,0 +1,17 @@
+<h1>Add friend</h1>
+<% if @users%>
+	<table>
+	<tr>
+		<td>Select User to add as friend</td>
+	</tr>
+	<% @users.each do |user| %>
+		<tr>
+			<td><%= user.email %></td>
+			<td><%= link_to "Add as friend", "/"%></td>
+		</tr>
+	<% end %>
+<% else %>
+	<p>Too bad you are all alone here</p>
+<% end %>
+
+</table>

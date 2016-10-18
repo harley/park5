@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   resources :messages do
 		collection do
-			get 'incoming'
+			get 'outgoing'
 		end
 		
 		collection do
-			get 'outgoing'
+			get 'incoming'
 		end
 
 		member do

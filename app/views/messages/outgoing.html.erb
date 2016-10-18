@@ -1,2 +1,30 @@
-<h1>Messages#outgoing</h1>
-<p>Find me in app/views/messages/outgoing.html.erb</p>
+<h1>Sent Messages</h1>
+<%= link_to "Incoming Message", incoming_messages_path %>
+<%= link_to "Add Friend", users_path %>
+<%= link_to "New Message", "/" %></p>
+<% if @outgoing_messages%>
+	<p>You have sent <%= @outgoing_messages.size %> messages</p>
+	<table>
+	<tr>
+		<td><strong>From</strong></td>
+		<td><strong>Subject</strong></td>
+		<td><strong>Body</strong></td>
+		<td><strong>Read at</strong></td>
+	</tr>
+	<% @outgoing_messages.each do |message| %>
+		<tr>
+			<td><%= message.sender %></td>
+			<td><%= message.subject %></td>
+			<td><%= message.body %></td>
+			<% if message.read_status == 1%>
+				<td><%= message.updated_at %></td>
+			<% else%>
+				<td>Unread</td>
+			<% end %>
+<% end %>
+		</tr>
+<% else %>
+	<p>You haven't sent any messages. Start a conversation now:<%= link_to "New Message", "/" %></p>
+<% end %>
+
+</table>

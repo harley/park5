@@ -5,6 +5,10 @@ class MessagesController < ApplicationController
 		@incoming_messages = current_user.incoming_messages
   end
 
+  def outgoing
+		@outgoing_messages = current_user.outgoing_messages
+  end
+
 	def mark_as_read
 		@messages = Message.find_by_id(params[:id])
 		@messages.read_status = 1
@@ -16,9 +20,6 @@ class MessagesController < ApplicationController
       render 'index'
     end
 	end
-
-  def outgoing
-  end
 
 #	def message_params
 #  	params.require(:message).permit(:id)

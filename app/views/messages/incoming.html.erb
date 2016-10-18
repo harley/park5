@@ -1,15 +1,15 @@
-<h1>Messages#incoming</h1>
+<h1>Incoming Message</h1>
+<%= link_to "Outgoing Message", outgoing_messages_path %>
+<%= link_to "Add Friend", users_path %>
 <%= link_to "New Message", "/" %>
-<%= link_to "Add Friend", "/" %>
-<%= link_to "View Sent Message", outgoing_messages_path %>
 <% if @incoming_messages%>
 	<p>You have <%= @incoming_messages.size %> incoming messages</p>
 	<table>
 	<tr>
-		<td>From</td>
-		<td>Subject</td>
-		<td>Body</td>
-		<td>Sent at</td>
+		<td><strong>From</strong></td>
+		<td><strong>Subject</strong></td>
+		<td><strong>Body</strong></td>
+		<td><strong>Sent at</strong></td>
 	</tr>
 	<% @incoming_messages.each do |message| %>
 		<tr>
@@ -25,7 +25,7 @@
 			<td><%= message.created_at %></td>
 			<% end %>
 			<td>
-			<%= link_to "Mark as read", mark_as_read_message_path(message.id), {:method=> :post} %>
+			<%= link_to "Mark as read", mark_as_read_message_path(message.id), {:method=> :post} %><%#//TODO change this to "View message" function%>
 			</td>
 <% end %>
 		</tr>

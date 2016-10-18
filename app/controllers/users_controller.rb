@@ -15,8 +15,12 @@ class UsersController < ApplicationController
 		end
 	end
 
-	def incoming_messages
-		Message.where(recipient_id: id)
+	def index
+		@users = User.list_all_user(session[:user_id])
+	end
+
+	def show
+		
 	end
 
 	private
