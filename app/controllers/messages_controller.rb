@@ -2,7 +2,21 @@ class MessagesController < ApplicationController
 	before_action :require_user!
 
 	def new
+		#@users = User.list_all_user(current_user.id)
+		@users = User.list_friend(current_user.id)
 		@message = Message.new
+	end
+
+	def create
+		@message = Message.new message_params
+		if @message.save!
+			flash[:success] = "Message sent"
+			redirect_to outgoing_messages_path
+		else
+			#//TODO fix error displaying destination page when having error, right now just crash
+			flash[:success] = "Error sending message"
+			render 'new'
+		end
 	end
 
   def incoming
@@ -25,7 +39,7 @@ class MessagesController < ApplicationController
     end
 	end
 
-#	def message_params
-#  	params.require(:message).permit(:id)
-#  end
+	def message_params
+  	params.require(:message).permit(:sender_id, :recipient_id, :subject, :body)
+  end
 end

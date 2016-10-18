@@ -14,6 +14,16 @@ class User < ApplicationRecord
 		User.where.not(id: id)
 	end
 
+	def self.list_friend(id)
+		#Friend_id = Relationship.where(first_person_id: id)
+		#User.where("id in (?)",Friend_id)
+		#ERROR dynamic constant assignment Friend_id = Relationship.where(first_person_id: id)
+
+		User.where(id: Relationship.where(first_person_id: 2).pluck(:second_person_id))
+
+		#SELECT email,id from Users where id in (select second_person_id from Relationships where first_person_id =) 
+	end
+
 	def to_s
 		email
 	end

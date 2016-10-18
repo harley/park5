@@ -1,11 +1,14 @@
 <h1>New Message</h1>
+<%= link_to "Friend List", relationships_path %>
 <%= form_for @message do |f|%>
 	<% if @message.errors.present?%>
 	<div class="alert alert-danger">
   <%= @message.errors.full_messages.to_sentence%>
   </div>
   <%end%>
-	<%= f.select :recipient, [['Abc','1'],['Xyz','2']] %>
+	<%= f.hidden_field :sender_id, value: current_user.id%>
+	<%= f.select :recipient_id, options_for_select(@users.collect { |user|
+    [user.email, user.id] }, 1), {}, { id: 'users_select' } %>
 	<%= f.text_field :subject, placeholder: "Subject"%>
 	<%= f.text_area :body, placeholder: "Body"%>
 	<%= f.submit %>

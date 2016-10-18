@@ -8,14 +8,12 @@
 	<tr>
 		<td><strong>From</strong></td>
 		<td><strong>Subject</strong></td>
-		<td><strong>Body</strong></td>
 		<td><strong>Read at</strong></td>
 	</tr>
 	<% @outgoing_messages.each do |message| %>
 		<tr>
 			<td><%= message.sender %></td>
 			<td><%= message.subject %></td>
-			<td><%= message.body %></td>
 			<% if message.read_status == 1%>
 				<td><%= message.updated_at %></td>
 			<% else%>

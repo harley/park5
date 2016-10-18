@@ -16,7 +16,7 @@ class RelationshipsController < ApplicationController
 	end
 
   def index
-		@relationships = Relationship.list_all_relation(session[:user_id])
+		@relationships = Relationship.list_friend(session[:user_id])
   end
 
   def update
