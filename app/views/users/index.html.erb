@@ -1,15 +1,24 @@
 <h1>Add friend</h1>
+<%= link_to "Friend List", relationships_path %>
 <% if @users%>
 	<table>
 	<tr>
-		<td>Select User to add as friend</td>
+		<td>Add user to friends list.</td>
 	</tr>
+	
 	<% @users.each do |user| %>
 		<tr>
 			<td><%= user.email %></td>
-			<td><%= link_to "Add as friend", "/"%></td>
+			<td><%= user.id %></td>
+			<td>
+				<%= button_to '+', 
+				{:controller =>relationships_path, :action => "create", :first_person_id => current_user.id, :second_person_id => user.id} , :method=>:post  %>
+			</td>
 		</tr>
 	<% end %>
+	 
+
+
 <% else %>
 	<p>Too bad you are all alone here</p>
 <% end %>

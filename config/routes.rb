@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  #get 'relationship/add'
+  #get 'relationship/block'
+  #get 'relationship/unblock'
+	#SEEMS TO BE INCORRECT. Should have use the below?
+	resources :relationships, only: [:new, :create, :update, :index]
+
   resources :messages do
 		collection do
 			get 'outgoing'

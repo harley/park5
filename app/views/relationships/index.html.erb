@@ -1,0 +1,15 @@
+<h1>Your friend list</h1>
+<%= link_to "Add Friend", users_path %>
+<%= link_to "New Message", new_message_path %>
+<% if @relationships%>
+	<table>
+	<% @relationships.each do |relation| %>
+	<tr>
+			<td><%= relation.second_person %></td>
+	</tr>
+	<% end %>
+	</table>
+<% else %>
+	<p>You haven't added any friend yet. Let make some now: </p>
+<% end %>
+

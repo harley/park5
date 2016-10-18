@@ -1,7 +1,7 @@
 <h1>Sent Messages</h1>
+<%= link_to "Friend List", relationships_path %>
 <%= link_to "Incoming Message", incoming_messages_path %>
-<%= link_to "Add Friend", users_path %>
-<%= link_to "New Message", "/" %></p>
+<%= link_to "New Message", new_message_path %></p>
 <% if @outgoing_messages%>
 	<p>You have sent <%= @outgoing_messages.size %> messages</p>
 	<table>

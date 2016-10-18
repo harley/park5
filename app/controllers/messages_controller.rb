@@ -1,6 +1,10 @@
 class MessagesController < ApplicationController
 	before_action :require_user!
 
+	def new
+		@message = Message.new
+	end
+
   def incoming
 		@incoming_messages = current_user.incoming_messages
   end
