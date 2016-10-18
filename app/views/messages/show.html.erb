@@ -1,0 +1,17 @@
+<h1>View Message</h1>
+<%= link_to "Incoming Message", incoming_messages_path %>
+<%= form_for @message do |f|%>
+	<% if @message.errors.present?%>
+	<div class="alert alert-danger">
+  <%= @message.errors.full_messages.to_sentence%>
+  </div>
+  <%end%>
+
+	<% if @message.read_status == 1%>
+	<h1>YOU HAVE ALREADY READ THIS MESSAGE</h1>
+	<% else %>
+	<div>Sender:	<%= f.label :sender, @message.sender %></div>
+	<div>Subject: <%= f.label :subject, @message.subject %></div>
+	<div>Body: <%= f.label :body, @message.body %></div>
+	<% end %>
+<% end %>

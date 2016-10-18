@@ -12,7 +12,7 @@
 	</tr>
 	<% @outgoing_messages.each do |message| %>
 		<tr>
-			<td><%= message.sender %></td>
+			<td><%= message.recipient %></td>
 			<td><%= message.subject %></td>
 			<% if message.read_status == 1%>
 				<td><%= message.updated_at %></td>

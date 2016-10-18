@@ -39,6 +39,14 @@ class MessagesController < ApplicationController
     end
 	end
 
+	def show
+		@message = Message.find_by_id(params[:id])
+		@message.read_status = 1
+		@message.save
+	end
+
+	private 
+
 	def message_params
   	params.require(:message).permit(:sender_id, :recipient_id, :subject, :body)
   end

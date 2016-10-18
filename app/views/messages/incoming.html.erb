@@ -8,24 +8,23 @@
 	<tr>
 		<td><strong>From</strong></td>
 		<td><strong>Subject</strong></td>
-		<td><strong>Body</strong></td>
 		<td><strong>Sent at</strong></td>
 	</tr>
 	<% @incoming_messages.each do |message| %>
 		<tr>
+		<%#//TODO How to shortern below codes???%>
 			<% unless message.read_status%>
 			<td><strong><%= message.sender %></strong></td>
 			<td><strong><%= message.subject %></strong></td>
-			<td><strong><%= message.body %></strong></td>
 			<td><strong><%= message.created_at %></strong></td>
 			<% else%>
 			<td><%= message.sender %></td>
 			<td><%= message.subject %></td>
-			<td><%= message.body %></td>
 			<td><%= message.created_at %></td>
 			<% end %>
 			<td>
-			<%= link_to "Mark as read", mark_as_read_message_path(message.id), {:method=> :post} %><%#//TODO change this to "View message" function%>
+			<%#= link_to "Mark as read", mark_as_read_message_path(message.id), {:method=> :post} %>
+			<%= link_to "View Message", message_path(message.id) %>
 			</td>
 <% end %>
 		</tr>
