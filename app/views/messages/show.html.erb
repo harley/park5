@@ -7,11 +7,11 @@
   </div>
   <%end%>
 
-	<% if @message.read_status == 1%>
-	<h1>YOU HAVE ALREADY READ THIS MESSAGE</h1>
+	<% if @message.body %>
+		<div>Sender:	<%= f.label :sender, @message.sender %></div>
+		<div>Subject: <%= f.label :subject, @message.subject %></div>
+		<div>Body: <%= f.label :body, @message.body %></div>
 	<% else %>
-	<div>Sender:	<%= f.label :sender, @message.sender %></div>
-	<div>Subject: <%= f.label :subject, @message.subject %></div>
-	<div>Body: <%= f.label :body, @message.body %></div>
+		<h1>YOU HAVE ALREADY READ THIS MESSAGE</h1>
 	<% end %>
 <% end %>

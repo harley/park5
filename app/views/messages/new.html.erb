@@ -7,10 +7,10 @@
   </div>
   <%end%>
 	<%= f.hidden_field :sender_id, value: current_user.id%>
-	<%= f.select :recipient_id, options_for_select(@users.collect { |user|
-    [user.email, user.id] }, 1), {}, { id: 'users_select' } %>
-	<%= f.text_field :subject, placeholder: "Subject"%>
-	<%= f.text_area :body, placeholder: "Body"%>
-	<%= f.submit %>
+	<div>To: <%= f.select :recipient_id, options_for_select(@users.collect { |user|
+    [user.email, user.id] }, 1), {}, { id: 'users_select' } %></div>
+	<div>Subject: <%= f.text_field :subject, placeholder: "Subject"%></div>
+	<div>Body <%= f.text_area :body, placeholder: "Body"%></div>
+	<div><%= f.submit %></div>
 
 <% end %>

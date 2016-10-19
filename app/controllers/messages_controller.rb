@@ -27,22 +27,26 @@ class MessagesController < ApplicationController
 		@outgoing_messages = current_user.outgoing_messages
   end
 
-	def mark_as_read
-		@messages = Message.find_by_id(params[:id])
-		@messages.read_status = 1
-  	@messages.updated_at = Time.now
-    if @messages.save
-			flash[:success] = "Message Read!"
-      redirect_to incoming_messages_path
-    else
-      render 'index'
-    end
-	end
+	# def mark_as_read
+	# 	@messages = Message.find_by_id(params[:id])
+	# 	@messages.read_status = 1
+  # 	@messages.updated_at = Time.now
+  #   if @messages.save
+	# 		flash[:success] = "Message Read!"
+  #     redirect_to incoming_messages_path
+  #   else
+  #     render 'index'
+  #   end
+	# end
 
 	def show
 		@message = Message.find_by_id(params[:id])
-		@message.read_status = 1
-		@message.save
+		if @message.read_status == nil 
+			@message.read_status = @message.read_status.to_i + 1
+			@message.save
+		else
+			@message.body = nil
+		end
 	end
 
 	private 

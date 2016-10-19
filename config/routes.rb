@@ -17,8 +17,9 @@ Rails.application.routes.draw do
 		member do
 			post 'mark_as_read'
 		end
-end
+	end
 
+	get 'auth/:provider/callback' => 'sessions#callback'
 
 	#get 'sessions/new', as: :login
 	#post 'sessions' => 'sessions#create', as: :submit_login

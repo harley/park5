@@ -10,8 +10,8 @@ class RelationshipsController < ApplicationController
 			flash[:success] = "Added as friend "
 			redirect_to relationships_path
 		else
-			flash[:success] = "Error adding friend"
-			redirect_to relationships_path
+			flash[:error] = @relationship.errors.full_messages.to_sentence
+			redirect_to users_path
 		end
 	end
 
