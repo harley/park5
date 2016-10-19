@@ -3,11 +3,11 @@
 <%= link_to "Outgoing Message", outgoing_messages_path %>
 <%= link_to "Add Friend", users_path %>
 <%= link_to "New Message", new_message_path %>
-<% if @relationships%>
+<% if @friendlist%>
 	<table>
-	<% @relationships.each do |relation| %>
+	<% @friendlist.each do |friend| %>
 	<tr>
-			<td><%= relation.second_person %></td>
+			<td><%= friend.email %></td>
 	</tr>
 	<% end %>
 	</table>

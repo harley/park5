@@ -42,8 +42,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
+  
+	# def filename
+  #    random_string + ".jpg" if original_filename
   # end
-
+	# def random_string
+	# 	('a'..'z').to_a.shuffle[0,8].join
+	# 	#for more secure random, use securerandom
+	# end
 end

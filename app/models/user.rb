@@ -18,8 +18,9 @@ class User < ApplicationRecord
 		#Friend_id = Relationship.where(first_person_id: id)
 		#User.where("id in (?)",Friend_id)
 		#ERROR dynamic constant assignment Friend_id = Relationship.where(first_person_id: id)
-
-		User.where(id: Relationship.where("first_person_id = ? OR second_person_id = ? ", id,id).pluck(:second_person_id))
+		@AllRelation = Relationship.where(first_person_id: id).pluck(:second_person_id) + Relationship.where(second_person_id: id).pluck(:first_person_id)
+		User.where(:id => @AllRelation)
+		#User.where(id: Relationship.where("first_person_id = ? OR second_person_id = ? ", id,id).pluck(:second_person_id))
 
 		#SELECT email,id from Users where id in (select second_person_id from Relationships where first_person_id =) 
 	end
