@@ -11,6 +11,7 @@
     [user.email, user.id] }, 1), {}, { id: 'users_select' } %></div>
 	<div>Subject: <%= f.text_field :subject, placeholder: "Subject"%></div>
 	<div>Body <%= f.text_area :body, placeholder: "Body"%></div>
+	<div>Photo <%= f.file_field :photo %></div>
 	<div><%= f.submit %></div>
 
 <% end %>

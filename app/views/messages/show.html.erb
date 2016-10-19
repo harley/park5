@@ -11,6 +11,7 @@
 		<div>Sender:	<%= f.label :sender, @message.sender %></div>
 		<div>Subject: <%= f.label :subject, @message.subject %></div>
 		<div>Body: <%= f.label :body, @message.body %></div>
+		<div>Photo <%= image_tag(@message.photo) if @message.photo? %></div>
 	<% else %>
 		<h1>YOU HAVE ALREADY READ THIS MESSAGE</h1>
 	<% end %>

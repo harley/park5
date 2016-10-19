@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+
+gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 gem 'omniauth-facebook'
 gem 'bcrypt', '~> 3.1.7'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
