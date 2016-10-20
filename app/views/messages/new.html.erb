@@ -7,8 +7,11 @@
   </div>
   <%end%>
 	<%= f.hidden_field :sender_id, value: current_user.id%>
-	<div>To: <%= f.select :recipient_id, options_for_select(@users.collect { |user|
-    [user.email, user.id] }, 1), {}, { id: 'users_select' } %></div>
+	<div>Select Users: <%= f.select :recipient_id, 
+		options_for_select(@users.collect { |user| [user.email, user.id] },1),
+		  {:multiple => :multiple, :size => 10},
+		  { id: 'recipient_id[]',:multiple => true, :class => "chzn-select", :style => "width:400px;" }#,:onclick => "alert('HI');" 
+			%></div>
 	<div>Subject: <%= f.text_field :subject, placeholder: "Subject"%></div>
 	<div>Body <%= f.text_area :body, placeholder: "Body"%></div>
 	<div>Photo <%= f.file_field :photo %></div>

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 	resources :relationships, only: [:new, :create, :update, :index]
 
   resources :messages do
+		get :autocomplete_user_email, :on => :collection
+		
 		collection do
 			get 'outgoing'
 		end

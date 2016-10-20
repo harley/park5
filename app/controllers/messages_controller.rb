@@ -8,14 +8,36 @@ class MessagesController < ApplicationController
 	end
 
 	def create
-		@message = Message.new message_params
-		if @message.save!
-			flash[:success] = "Message sent"
+		@recipients = message_params[:recipient_id]
+		@flash_success = ""
+		@flash_fail = ""
+		if @recipients
+			@recipients.each do |recipient|
+				
+				if recipient.to_i > 0
+					@message = Message.new
+					@message.sender_id = message_params[:sender_id]
+					@message.recipient_id = recipient
+					@message.subject = message_params[:subject]
+					@message.body = message_params[:body]
+					@message.photo = message_params[:photo]
+					if @message.save!
+						@flash_success << recipient.to_s + ","
+					else
+						@flash_fail << recipient.to_s + ","
+					end
+				end
+			end
+
+			if @flash_success.length > 0
+				@flash_success = "Message sent to " + @flash_success + ". "
+			end
+
+			if @flash_fail.length > 0
+				@flash_fail = "Message not sent to " + @flash_fail
+			end
+			flash[:success] = @flash_success + @flash_fail
 			redirect_to outgoing_messages_path
-		else
-			#//TODO fix error displaying destination page when having error, right now just crash
-			flash[:success] = "Error sending message"
-			render 'new'
 		end
 	end
 
@@ -52,6 +74,7 @@ class MessagesController < ApplicationController
 	private 
 
 	def message_params
-  	params.require(:message).permit(:sender_id, :recipient_id, :subject, :body, :photo)
+		params[:message][:recipient_id] ||= []
+  	params.require(:message).permit(:sender_id, :subject, :body, :photo, :recipient_id => [])
   end
 end
