@@ -10,6 +10,8 @@ gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 gem 'omniauth-facebook'
 #Password encryption
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'bootstrap', '~> 4.0.0.alpha4'
 #########################################
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

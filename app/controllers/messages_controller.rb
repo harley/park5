@@ -10,7 +10,6 @@ class MessagesController < ApplicationController
 	def create
 		@recipients = message_params[:recipient_id]
 		@flash_success = ""
-		@flash_fail = ""
 		if @recipients
 			@recipients.each do |recipient|
 				
@@ -18,13 +17,23 @@ class MessagesController < ApplicationController
 					@message = Message.new
 					@message.sender_id = message_params[:sender_id]
 					@message.recipient_id = recipient
-					@message.subject = message_params[:subject]
-					@message.body = message_params[:body]
+					if message_params[:subject]
+						@message.subject = message_params[:subject]
+					else
+						@message.subject = "subject"
+					end
+					if message_params[:body]
+						@message.body = message_params[:body]
+					else
+						@message.body = "body"
+					end
 					@message.photo = message_params[:photo]
-					if @message.save!
+					@message.read_count_allowed = message_params[:read_count_allowed]
+					if @message.save
 						@flash_success << recipient.to_s + ","
 					else
-						@flash_fail << recipient.to_s + ","
+						flash[:error] = @message.errors.full_messages.to_sentence
+						render 'new'
 					end
 				end
 			end
@@ -33,10 +42,7 @@ class MessagesController < ApplicationController
 				@flash_success = "Message sent to " + @flash_success + ". "
 			end
 
-			if @flash_fail.length > 0
-				@flash_fail = "Message not sent to " + @flash_fail
-			end
-			flash[:success] = @flash_success + @flash_fail
+			flash[:success] = @flash_success
 			redirect_to outgoing_messages_path
 		end
 	end
@@ -63,7 +69,7 @@ class MessagesController < ApplicationController
 
 	def show
 		@message = Message.find_by_id(params[:id])
-		if @message.read_status == nil 
+		if @message.read_status.to_i < @message.read_count_allowed 
 			@message.read_status = @message.read_status.to_i + 1
 			@message.save
 		else
@@ -75,6 +81,6 @@ class MessagesController < ApplicationController
 
 	def message_params
 		params[:message][:recipient_id] ||= []
-  	params.require(:message).permit(:sender_id, :subject, :body, :photo, :recipient_id => [])
+  	params.require(:message).permit(:sender_id, :subject, :body, :photo, :read_count_allowed, :recipient_id => [])
   end
 end

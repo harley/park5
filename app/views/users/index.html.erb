@@ -1,20 +1,32 @@
-<h1>Add friend</h1>
-<%= link_to "Friend List", relationships_path %>
-
-
+<h1>Community</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Incoming Message", incoming_messages_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Outgoing Message", outgoing_messages_path, class: 'nav-link'  %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Friend List", relationships_path, class: 'nav-link active' %>
+  </li>
+	<li class="nav-item">
+    <%= link_to "New Message", new_message_path, class: 'nav-link' %>
+  </li>
+</ul>
 <% if @users%>
 	<table>
 	<tr>
-		<td>Add user to friends list.</td>
+		<td>Here's a list of all users.</td>
 	</tr>
 	
 	<% @users.each do |user| %>
 		<tr>
 			<td><%= user.email %></td>
-			<td><%= user.id %></td>
 			<td>
-				<%= button_to '+', 
-				{:controller =>relationships_path, :action => "create", :first_person_id => current_user.id, :second_person_id => user.id} , :method=>:post  %>
+				<%= button_to 'add friend', 
+				{:controller =>relationships_path, :action => "create", :first_person_id => current_user.id, :second_person_id => user.id} ,
+				 :method=>:post,
+				 class: 'btn btn-primary btn-sm'  %>
 			</td>
 		</tr>
 	<% end %>
@@ -22,7 +34,18 @@
 
 
 <% else %>
-	<p>Too bad you are all alone here</p>
+	<p>Hey, WELCOME!! You are our first user EVAHHH!!! Mind helping us invite some friend over? <%= link_to "Invite friends", ""%></p>
 <% end %>
 
 </table>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+		<%= link_to "Friend List", relationships_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+		<%= link_to "Block List", blocklists_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Add Friend", users_path, class: 'nav-link active' %>
+  </li>
+</ul>

@@ -1,5 +1,19 @@
 <h1>New Message</h1>
-<%= link_to "Friend List", relationships_path %>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Incoming Message", incoming_messages_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Outgoing Message", outgoing_messages_path, class: 'nav-link'  %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Friend List", relationships_path, class: 'nav-link' %>
+  </li>
+	<li class="nav-item">
+    <%= link_to "New Message", new_message_path, class: 'nav-link active' %>
+  </li>
+</ul>
+<form>
 <%= form_for @message do |f|%>
 	<% if @message.errors.present?%>
 	<div class="alert alert-danger">
@@ -7,14 +21,34 @@
   </div>
   <%end%>
 	<%= f.hidden_field :sender_id, value: current_user.id%>
-	<div>Select Users: <%= f.select :recipient_id, 
+
+	<div class="form-group">
+		<label for="recipient_id">Select Recipient(S)</label>
+		<div class="form-control"><%= f.select :recipient_id, 
 		options_for_select(@users.collect { |user| [user.email, user.id] },1),
 		  {:multiple => :multiple, :size => 10},
-		  { id: 'recipient_id[]',:multiple => true, :class => "chzn-select", :style => "width:400px;" }#,:onclick => "alert('HI');" 
+		  { id: 'recipient_id[]',:multiple => true, :class => "chzn-select", }#,:onclick => "alert('HI');" 
 			%></div>
-	<div>Subject: <%= f.text_field :subject, placeholder: "Subject"%></div>
-	<div>Body <%= f.text_area :body, placeholder: "Body"%></div>
-	<div>Photo <%= f.file_field :photo %></div>
-	<div><%= f.submit %></div>
+	</div>
+	<div class="form-group">
+		<label for="subject">Subject</label>
+		<div class="form-control"><%= f.text_field :subject, placeholder: "Subject"%></div>
+	</div>
+	<div class="form-group">
+		<label for="body">Body</label>
+		<div class="form-control"><%= f.text_area :body, placeholder: "Body"%></div>
+	</div>
+	<div class="form-group">
+		<label for="Photo">Photo</label>
+		<div class="form-control"><%= f.file_field :photo %></div>
+	</div>
+	<div class="form-group">
+		<label for="allowed_read_count">Number of view allowed</label>
+		<div class="form-control"><%= f.number_field :read_count_allowed, :value => 1 %></div>
+	</div>
+	<div class="form-group">
+		<div class="form-control"><%= f.submit class: 'btn btn-success btn-sm'%></div>
+	</div>
 
 <% end %>
+</form>

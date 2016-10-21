@@ -23,15 +23,72 @@ class RelationshipsController < ApplicationController
 
   def index
 		# @relationships = Relationship.list_friend(session[:user_id])
-		@friendlist = User.list_friend(session[:user_id])
+		#Work without block function: @friendlist = User.list_friend(session[:user_id])
+		#NOT WORK @friendlist = Relationship.list_all_friend(session[:user_id])
+
+		#load friend only
+		@friendlist = Relationship.list_all_friend(session[:user_id])
   end
 
   def update
+    respond_to do |format|
+			if params[:relation] == nil
+				raise 'nil'
+				redirect_to relationships_path
+			elsif params[:relation] == 1
+				raise 'block'
+				redirect_to relationships_path
+			else
+				raise 'new action'
+				render 'show'
+			end
+    end
   end
+	
+	def show
+		@relationship = Relationship.find_by_id(params[:id])
+	end
 
+	def blocklist
+		#@blocklist = Relationship.where(first_person_id: current_user.id, relation: 1) + Relationship.where(second_person_id: current_user.id, relation: 1)
+		@blocklist = BlockedFriend.where(user_id: current_user.id)
+	end
+
+	def block_user
+		@relationship = Relationship.find_by_id(params[:id])
+		@user_id_to_block = @relationship.first_person_id == current_user.id ? @relationship.second_person_id : @relationship.first_person_id
+		@blocked_friend = BlockedFriend.new
+		@blocked_friend.user_id = current_user.id
+		@blocked_friend.friend_id = @user_id_to_block
+    if @blocked_friend.save
+			flash[:success] = "User added to block list"
+      redirect_to blocklists_path
+    else
+      render 'show'
+    end
+	end
+
+	def unblock_user
+		@relationship = Relationship.find_by_id(params[:id])
+		@relationship.relation = nil
+  	@relationship.updated_at = Time.now
+    if @relationship.save
+			flash[:success] = "User removed from block list"
+      redirect_to relationships_path
+    else
+      render 'show'
+    end
+	end
+
+	def destroy
+		@relationship = Relationship.find_by_id(params[:id])
+		@relationship.destroy
+		flash[:success] = "Friend removed"
+		redirect_to relationships_path
+	end
 	private
 
 	def relation_params
-		params.require(:first_person_id).permit(:first_person_id, :second_person_id, :relation)
+		params.require(:relationship).permit(:first_person_id, :second_person_id, :relation, :id)
 	end
 end

@@ -3,11 +3,22 @@ Rails.application.routes.draw do
   #get 'relationship/block'
   #get 'relationship/unblock'
 	#SEEMS TO BE INCORRECT. Should have use the below?
-	resources :relationships, only: [:new, :create, :update, :index]
+	#resources :relationships, only: [:new, :create, :update, :index, :show]
+	resources :relationships do
+		member do
+			post 'block_user'
+		end
+
+		member do
+			post 'unblock_user'
+		end
+		# member do
+		# 	post 'remove_user'
+		# end
+	end
 
   resources :messages do
-		get :autocomplete_user_email, :on => :collection
-		
+
 		collection do
 			get 'outgoing'
 		end
@@ -21,6 +32,8 @@ Rails.application.routes.draw do
 		end
 	end
 
+	#get 'blocklist' => 'relationships#blocklist'
+	resources :blocklists
 	get 'auth/:provider/callback' => 'sessions#callback'
 
 	#get 'sessions/new', as: :login

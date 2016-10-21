@@ -3,7 +3,9 @@ class User < ApplicationRecord
 	has_secure_password
 
 	def incoming_messages
-		Message.where(recipient_id: id).order(created_at: :desc)
+		
+		Message.find_by_sql ["Select * from MESSAGES where
+			recipient_id = ? AND sender_id NOT IN (SELECT friend_id FROM blocked_friends WHERE user_id = ?)", id, id] 
 	end
 
 	def outgoing_messages
@@ -15,14 +17,8 @@ class User < ApplicationRecord
 	end
 
 	def self.list_friend(id)
-		#Friend_id = Relationship.where(first_person_id: id)
-		#User.where("id in (?)",Friend_id)
-		#ERROR dynamic constant assignment Friend_id = Relationship.where(first_person_id: id)
 		@AllRelation = Relationship.where(first_person_id: id).pluck(:second_person_id) + Relationship.where(second_person_id: id).pluck(:first_person_id)
-		User.where(:id => @AllRelation)
-		#User.where(id: Relationship.where("first_person_id = ? OR second_person_id = ? ", id,id).pluck(:second_person_id))
-
-		#SELECT email,id from Users where id in (select second_person_id from Relationships where first_person_id =) 
+		User.where(:id => @AllRelation) 
 	end
 
 	def to_s

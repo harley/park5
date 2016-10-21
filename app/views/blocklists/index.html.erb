@@ -1,0 +1,42 @@
+<h1>Your block list</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Incoming Message", incoming_messages_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Outgoing Message", outgoing_messages_path, class: 'nav-link'  %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Friend List", relationships_path, class: 'nav-link active' %>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+<% if @blocklists%>
+	<div class="inline">You have blocked <%= @blocklists.size %> friend
+	<%= link_to "Find Friend", users_path, class: 'btn btn-primary btn-sm' %></div>
+	<table class="table">
+	<% @blocklists.each do |blocklist| %>
+	<tr>
+		<td><%= blocklist.friend %></td>
+		
+		<td><%= link_to 'Unblock', blocklist_path(blocklist.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-sm' %></td>
+	</tr>
+	<% end %>
+	</table>
+<% else %>
+	<p>You haven't added any friend yet. Let make some now: </p>
+<% end %>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+		<%= link_to "Friend List", relationships_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+		<%= link_to "Block List", blocklists_path, class: 'nav-link active' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Add Friend", users_path, class: 'nav-link' %>
+  </li>
+</ul>
+

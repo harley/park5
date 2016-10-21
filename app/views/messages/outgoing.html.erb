@@ -1,14 +1,26 @@
 <h1>Sent Messages</h1>
-<%= link_to "Friend List", relationships_path %>
-<%= link_to "Incoming Message", incoming_messages_path %>
-<%= link_to "New Message", new_message_path %></p>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Incoming Message", incoming_messages_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Outgoing Message", outgoing_messages_path, class: 'nav-link active'  %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Friend List", relationships_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "New Message", new_message_path, class: 'nav-link' %>
+  </li>
+</ul>
 <% if @outgoing_messages%>
-	<p>You have sent <%= @outgoing_messages.size %> messages</p>
-	<table>
+	<div class="inline">You have sent <%= @outgoing_messages.size %> messages 
+	<%= link_to "New Message", new_message_path, class: 'btn btn-primary btn-sm'  %></div>
+	<table class="table">
 	<tr>
-		<td><strong>To</strong></td>
-		<td><strong>Subject</strong></td>
-		<td><strong>Read at</strong></td>
+		<th><strong>To</strong></th>
+		<th><strong>Subject</strong></th>
+		<th><strong>Read at</strong></th>
 	</tr>
 	<% @outgoing_messages.each do |message| %>
 		<tr>

@@ -1,17 +1,48 @@
 <h1>Your friend list</h1>
-<%= link_to "Incoming Message", incoming_messages_path %>
-<%= link_to "Outgoing Message", outgoing_messages_path %>
-<%= link_to "Add Friend", users_path %>
-<%= link_to "New Message", new_message_path %>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Incoming Message", incoming_messages_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Outgoing Message", outgoing_messages_path, class: 'nav-link'  %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Friend List", relationships_path, class: 'nav-link active' %>
+  </li>
+	<li class="nav-item">
+    <%= link_to "New Message", new_message_path, class: 'nav-link' %>
+  </li>
+</ul>
 <% if @friendlist%>
-	<table>
-	<% @friendlist.each do |friend| %>
+<div class="inline">You have <%= @friendlist.size %> friend
+	<%= link_to "Find Friend", users_path, class: 'btn btn-primary btn-sm' %></div>
+	<table class="table">
+	<% @friendlist.each do |friendship| %>
 	<tr>
-			<td><%= friend.email %></td>
+			<td><%= link_to friendship.first_person_id == session[:user_id] ? friendship.second_person : friendship.first_person ,
+			 relationship_path(friendship.id) %></td>
+			 <td>
+			<%#= link_to "Block", block_user_relationship_path(friendship.id), method: :post, data: {confirm: 'Are you sure?'} %>	
+			<%= link_to "Block", block_user_relationship_path(friendship), 
+			method: :post, data: {confirm: 'Are you sure?'}, class: 'btn btn-warning btn-sm' %>
+
+			<%= link_to 'Remove', friendship, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
 	</tr>
 	<% end %>
 	</table>
 <% else %>
-	<p>You haven't added any friend yet. Let make some now: </p>
+	<div class="inline">You haven't added any friend yet. Let make some now: 
+	<%= link_to "New Message", users_path, class: 'btn btn-primary btn-sm'  %></div>
 <% end %>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+		<%= link_to "Friend List", relationships_path, class: 'nav-link active' %>
+  </li>
+  <li class="nav-item">
+		<%= link_to "Block List", blocklists_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Add Friend", users_path, class: 'nav-link' %>
+  </li>
+</ul>
 

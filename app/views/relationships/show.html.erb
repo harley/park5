@@ -1,0 +1,38 @@
+<h1>Friendship history</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "Incoming Message", incoming_messages_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Outgoing Message", outgoing_messages_path, class: 'nav-link'  %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Friend List", relationships_path, class: 'nav-link active' %>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+<% if @relationship %>
+<div class="inline">	
+		<% if @relationship.first_person_id == session[:user_id] %>
+			<p>You added <%= @relationship.second_person.email %> on <%= @relationship.created_at %></p>
+		<% else %>
+			<p><%= @relationship.first_person.email %> added you on <%= @relationship.created_at %></p>
+		<% end %>
+		<%= link_to "Block", block_user_relationship_path(@relationship.id), method: :post, data: {confirm: 'Are you sure?'},class: 'btn btn-warning btn-sm' %>	
+		<%= link_to 'Remove', @relationship, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></span>
+<% end %>
+</div>
+<br>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+		<%= link_to "Friend List", relationships_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+		<%= link_to "Block List", blocklists_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Add Friend", users_path, class: 'nav-link active' %>
+  </li>
+</ul>

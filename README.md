@@ -28,9 +28,9 @@ The following **optional** functionality is complete:
 * [x] User can attach an image.
 * [x] User can have multiple recipients on one message. 
 * [x] User can log in with Facebook. 
-* [ ] User A can "block" User B. If User A blocks User B, they will not see messages from User B. User B will not know they have been blocked.
-* [ ] User can remove friends from their friends list.
-* [ ] User can unblock friends from their block list.
+* [x] User A can "block" User B. If User A blocks User B, they will not see messages from User B. User B will not know they have been blocked.
+* [x] User can remove friends from their friends list.
+* [x] User can unblock friends from their block list.
 * [ ] Implement Infinite Scroll. Hint: you can use the [kaminari gem](https://github.com/amatsuda/kaminari) and [jquery-infinite-pages gem](https://github.com/magoosh/jquery-infinite-pages).
 * [ ] User gets an email when they receive a message, with a link to view the message.
 * [ ] User gets an email when a message they have sent is read with the time at which the message was read.
