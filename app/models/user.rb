@@ -5,7 +5,7 @@ class User < ApplicationRecord
 	def incoming_messages
 		
 		Message.find_by_sql ["Select * from MESSAGES where
-			recipient_id = ? AND sender_id NOT IN (SELECT friend_id FROM blocked_friends WHERE user_id = ?)", id, id] 
+			recipient_id = ? AND sender_id NOT IN (SELECT friend_id FROM blocked_friends WHERE user_id = ?) order by created_at desc", id, id] 
 	end
 
 	def outgoing_messages
