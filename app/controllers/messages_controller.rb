@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
 	before_action :require_user!
 
+	MSG_URL = "http://localhost:3000/messages/"
 	def new
 		#@users = User.list_all_user(current_user.id)
 		@users = User.list_friend(current_user.id)
@@ -12,7 +13,6 @@ class MessagesController < ApplicationController
 		@flash_success = ""
 		if @recipients
 			@recipients.each do |recipient|
-				
 				if recipient.to_i > 0
 					@message = Message.new
 					@message.sender_id = message_params[:sender_id]
@@ -31,6 +31,9 @@ class MessagesController < ApplicationController
 					@message.read_count_allowed = message_params[:read_count_allowed]
 					if @message.save
 						@flash_success << recipient.to_s + ","
+						@reader = User.find_by_id(recipient)
+						@url = MSG_URL + @message.id.to_s
+						UserMailer.new_msg_recieved_noti(@reader,@url).deliver_now
 					else
 						flash[:error] = @message.errors.full_messages.to_sentence
 						render 'new'
@@ -69,11 +72,18 @@ class MessagesController < ApplicationController
 
 	def show
 		@message = Message.find_by_id(params[:id])
-		if @message.read_status.to_i < @message.read_count_allowed 
-			@message.read_status = @message.read_status.to_i + 1
-			@message.save
+		if @message.recipient_id == current_user.id
+			if @message.read_status.to_i < @message.read_count_allowed 
+				@message.read_status = @message.read_status.to_i + 1
+				@message.save
+				@sender = User.find_by_id(@message.sender_id)
+				UserMailer.sent_msg_seen_noti(@sender,Time.now.to_s,current_user.to_s).deliver_now
+			else
+				@message.body = nil
+			end
 		else
-			@message.body = nil
+			flash[:error] = "You don't have permission to view this message"
+			redirect_to incoming_messages_path
 		end
 	end
 

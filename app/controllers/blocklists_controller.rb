@@ -1,4 +1,5 @@
 class BlocklistsController < ApplicationController
+	before_action :require_user!
 	def new
 	end
 	def create

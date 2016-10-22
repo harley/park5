@@ -1,4 +1,5 @@
 class RelationshipsController < ApplicationController
+	before_action :require_user!
 	def new
 		@relationship = Relationship.new
 	end

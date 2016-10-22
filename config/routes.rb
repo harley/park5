@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  resources :messages do
+
+		collection do
+			get 'outgoing'
+		end
+		
+		collection do
+			get 'incoming'
+		end
+
+		member do
+			post 'mark_as_read'
+		end
+	end
   #get 'relationship/add'
   #get 'relationship/block'
   #get 'relationship/unblock'
@@ -15,21 +29,6 @@ Rails.application.routes.draw do
 		# member do
 		# 	post 'remove_user'
 		# end
-	end
-
-  resources :messages do
-
-		collection do
-			get 'outgoing'
-		end
-		
-		collection do
-			get 'incoming'
-		end
-
-		member do
-			post 'mark_as_read'
-		end
 	end
 
 	#get 'blocklist' => 'relationships#blocklist'

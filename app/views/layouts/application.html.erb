@@ -16,16 +16,17 @@
 		<% if current_user%>
 		Hello <%= current_user.email%>! <%= link_to "Logout", logout_path, method: 'delete' %>
 		<% else %>
-<ul class="nav navbar-nav">		
+<ul class="nav navbar-nav">	
    <li class="nav-item">
-      <%= link_to "Register", new_user_path %>
+      <%= link_to "Login with facebook", '/auth/facebook', class: "btn btn-primary" %>
+    </li>	
+   <li class="nav-item">
+      <%= link_to "Register", new_user_path, class: "btn btn-warning" %>
     </li>
    <li class="nav-item">
-      <%= link_to "Login", new_session_path %>
+      <%= link_to "Login", new_session_path, class: "btn btn-success" %>
     </li>
-   <li class="nav-item">
-      <%= link_to "Login with facebook", '/auth/facebook' %>
-    </li>
+
 		<% end %>
 		</ul>
 	</div>

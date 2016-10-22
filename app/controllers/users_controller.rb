@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	
 	def new
 		@user = User.new
 	end
@@ -9,7 +10,8 @@ class UsersController < ApplicationController
 			flash[:success] = "User created successfully"
 			#TODO: sign user in without logging in
 			#TODO: email user //implement email function using ACTION MAILER
-			redirect_to root_path
+			session[:user_id] = @user.id
+			redirect_to incoming_messages_path
 		else
 			render 'new'
 		end

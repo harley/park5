@@ -2,5 +2,5 @@
 <%= form_tag sessions_path do %>
 	<%= text_field_tag :email, params[:email], placeholder: "Email"%><%#The "params[:email]" code set value of email back from previous submission %>
 	<%= password_field_tag :password, nil, placeholder: "Password"%>
-	<%= submit_tag "Log In" %>
+	<%= submit_tag "Log In", class: "btn btn-success" %>
 <% end %>
